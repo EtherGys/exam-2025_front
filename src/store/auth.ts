@@ -1,12 +1,7 @@
 import { defineStore } from 'pinia'
 import { login as apiLogin, register as apiRegister, fetchMe } from '../api/auth'
+import type { User } from '../../types/User'
 
-export interface User {
-  id: number
-  nom: string
-  email: string
-  role: string
-}
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({

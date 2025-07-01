@@ -5,10 +5,6 @@ import AppLayout from './components/AppLayout.vue'
 </script>
 
 <template>
-  <header>
-    <NavBar/>
-  </header>
-  <RouterView />
   <AppLayout />
 
 </template>

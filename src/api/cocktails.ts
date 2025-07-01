@@ -1,13 +1,16 @@
 import axios from 'axios'
 
-const API_URL = 'http://localhost:8080/api'; // À adapter selon config back
+export async function fetchCocktail(id: number) {
+  const res = await axios.get(`${import.meta.env.API_URL}/cocktails/${id}`)
+  return res.data
+} 
 
-export async function fetchCarte() {
-  const res = await axios.get(`${API_URL}/carte`)
+export async function fetchAllCocktails() {
+  const res = await axios.get(`${import.meta.env.API_URL}/cocktails`)
   return res.data
 }
 
-export async function fetchCocktail(id: number) {
-  const res = await axios.get(`${API_URL}/cocktails/${id}`)
+export async function createCocktail(cocktail: any) {
+  const res = await axios.post(`${import.meta.env.API_URL}/cocktails`, cocktail)
   return res.data
-} 
+}
