@@ -10,7 +10,7 @@ const router = useRouter();
 const loading = ref(true);
 const error = ref('');
 const carte = ref<Carte | null>(null);
-const cocktails = ref<Cocktail[]>([]);
+const cocktails = ref<Cocktail[]>();
 
 onMounted(async () => {
   loading.value = true;
@@ -46,7 +46,7 @@ function goToCocktail(id: number) {
     <div v-else-if="error" class="text-red-500">{{ error }}</div>
     <div v-else>
       <h2 class="text-2xl font-semibold mb-4">Cocktails de la carte</h2>
-      <div v-if="cocktails.length === 0" class="text-gray-500">Aucun cocktail dans cette carte.</div>
+      <div v-if="cocktails?.length === 0" class="text-gray-500">Aucun cocktail dans cette carte.</div>
       <div v-else class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
         <div v-for="c in cocktails" :key="c.id" class="bg-white rounded-xl shadow-sm overflow-hidden cursor-pointer transition hover:shadow-md" @click="goToCocktail(c.id)">
           <img :src="'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80'" :alt="c.nom" class="w-full h-44 object-cover" />
