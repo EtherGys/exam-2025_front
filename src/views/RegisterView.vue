@@ -38,10 +38,10 @@
           <input v-model="password" type="password" class="w-full border rounded px-3 py-2" required />
         </div>
         <div v-if="auth.error" class="text-red-500 mb-2">{{ auth.error }}</div>
-        <button type="submit" class="w-full bg-pink-500 text-white py-2 rounded hover:bg-pink-600" :disabled="auth.loading">Créer un compte</button>
+        <button type="submit" class="w-full bg-pink-200 text-gray-800 font-semibold py-3 rounded-full text-lg hover:bg-pink-300 transition" :disabled="auth.loading">Créer un compte</button>
       </form>
       <div class="mt-4 text-sm text-center">
-        Déjà inscrit ? <router-link to="/login" class="text-pink-600 hover:underline">Se connecter</router-link>
+        Déjà inscrit ? <router-link to="/login" class="text-pink-400 hover:underline">Se connecter</router-link>
       </div>
     </div>
   </template>

@@ -16,7 +16,7 @@ function logout() {
 </script> 
 
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <div class="bg-gray-50">
     <!-- Nouvelle Navigation -->
     <nav class="bg-white border-b border-gray-200 shadow-sm px-12 py-4 flex items-center justify-between">
       <!-- Logo -->
@@ -38,7 +38,7 @@ function logout() {
         <!-- Panier -->
         <router-link to="/cart" class="relative">
           <svg class="w-6 h-6 text-gray-500 hover:text-black transition" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-          <span v-if="totalItems > 0" class="absolute -top-2 -right-2 bg-pink-500 text-white text-xs rounded-full px-2 py-0.5 shadow">{{ totalItems }}</span>
+          <span v-if="totalItems > 0" class="absolute -top-2 -right-2 bg-pink-300 text-white text-xs rounded-full px-2 py-0.5 shadow">{{ totalItems }}</span>
         </router-link>
         <!-- Avatar utilisateur ou login/register -->
         <div>
@@ -55,7 +55,7 @@ function logout() {
       </div>
     </nav>
     <!-- Contenu principal -->
-    <main class="max-w-6xl mx-auto px-4 py-8">
+    <main class="w-full px-4 py-8">
       <router-view />
     </main>
     <footer class="w-full border-t border-gray-200 bg-white py-4 text-center text-gray-500 text-sm mt-8">

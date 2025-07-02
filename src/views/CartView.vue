@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { useCartStore } from '../store/cart'
 import { createCommande } from '../api/commandes'
+import type { Commande } from '../../types/Commande'
 import { useRouter } from 'vue-router'
 
 const cart = useCartStore()
@@ -21,11 +22,12 @@ const total = computed(() => cart.items.reduce((sum, item) => sum + item.prix * 
 async function checkout() {
   if (cart.items.length === 0) return
   // Adapter la structure selon le backend
-  const payload = {
-    cocktails: cart.items.map(item => ({
+  const payload: Commande = {
+    lignesDeCommande: cart.items.map(item => ({
       cocktailId: item.id,
       taille: item.taille,
-      quantite: item.quantity
+      quantite: item.quantity,
+      prixTaille: item.prix
     }))
   }
   try {
@@ -40,7 +42,7 @@ async function checkout() {
 </script> 
 
 <template>
-  <div>
+  <div class="md:w-[80%] md:m-auto">
     <h1 class="text-2xl font-bold mb-2">Votre Panier</h1>
     <div v-if="cart.items.length === 0" class="text-gray-400">Votre panier est vide.</div>
     <div v-else>
@@ -50,16 +52,16 @@ async function checkout() {
           <div class="text-sm text-gray-500">{{ item.prix }} €</div>
         </div>
         <div class="flex items-center gap-2">
-          <button @click="updateQuantity(item, item.quantity - 1)" :disabled="item.quantity <= 1" class="px-2 py-1 bg-gray-100 rounded">-</button>
-          <input type="number" min="1" v-model.number="item.quantity" @change="updateQuantity(item, item.quantity)" class="w-12 border rounded text-center" />
-          <button @click="updateQuantity(item, item.quantity + 1)" class="px-2 py-1 bg-gray-100 rounded">+</button>
+          <button @click="updateQuantity(item, item.quantity - 1)" :disabled="item.quantity <= 1" class="px-2 py-1 bg-gray-100  rounded border border-gray-300">-</button>
+          <input type="string"  v-model.number="item.quantity" @change="updateQuantity(item, item.quantity)" class="w-12  h-8 rounded border border-gray-300 text-center" />
+          <button @click="updateQuantity(item, item.quantity + 1)" class="px-2 py-1 bg-gray-100  rounded border border-gray-300">+</button>
         </div>
         <button @click="removeItem(item)" class="text-red-500 hover:underline ml-4">Supprimer</button>
       </div>
       <div class="text-right font-semibold mt-6">
         Total : {{ total }} €
       </div>
-      <button class="mt-6 bg-pink-400 text-white px-6 py-2 rounded hover:bg-pink-500" @click="checkout" :disabled="cart.items.length === 0">Commander</button>
+      <button class="w-full md:w-45 bg-pink-200 text-gray-800 font-semibold py-3 rounded-full text-lg hover:bg-pink-300 transition" @click="checkout" :disabled="cart.items.length === 0">Commander</button>
     </div>
   </div>
 </template>

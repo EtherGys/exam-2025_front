@@ -1,3 +1,8 @@
+export enum Role {
+  USER = 'USER',
+  BARMAKER = 'BARMAKER',
+}
+
 export interface UserAuth {
     nom: string
     email: string
@@ -7,6 +12,8 @@ export interface UserAuth {
 export interface User {
   id: number
   nom: string
+  prenom: string
   email: string
-  role: string
+  adresse: string
+  role: Role
 }
