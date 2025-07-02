@@ -5,13 +5,8 @@ import { fetchCocktail } from '../api/cocktails'
 import { useCartStore } from '../store/cart'
 import type { Cocktail } from '../../types/Cocktail';
 import {useToast} from 'vue-toast-notification';
+import { Taille } from '../../types/Commande';
 
-
-enum Taille {
-  S = 'S',
-  M = 'M',
-  L = 'L',
-}
 const route = useRoute()
 const cocktail = ref<Cocktail>()
 const loading = ref(true)

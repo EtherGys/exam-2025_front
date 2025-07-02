@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import type { Carte } from '../../types/Carte';
 import { fetchCommandeByBarmaker, updateLigneStatut } from '@/api/commandes';
-import { StatutCommande, type Commande, StatutCocktail } from '../../types/Commande';
+import { StatutCocktail, StatutCommande, type Commande } from '../../../types/Commande';
 
 
 const router = useRouter();

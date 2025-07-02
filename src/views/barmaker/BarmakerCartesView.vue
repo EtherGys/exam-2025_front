@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { defineComponent, onMounted, ref } from 'vue';
+import { fetchCarteByBarmaker } from '@/api/carte';
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { fetchAllCartes, fetchCarteByBarmaker } from '../api/carte';
-import type { Carte } from '../../types/Carte';
+import type { Carte } from '../../../types/Carte';
 
 
 const router = useRouter();

@@ -1,5 +1,6 @@
-import BarmakerCartesView from '@/views/BarmakerCartesView.vue'
-import BarmakerCommandesView from '@/views/BarmakerCommandesView.vue'
+
+import BarmakerCartesView from '@/views/barmaker/BarmakerCartesView.vue'
+import BarmakerCommandesView from '@/views/barmaker/BarmakerCommandesView.vue'
 import CarteCreateView from '@/views/CarteCreateView.vue'
 import CarteView from '@/views/CarteView.vue'
 import CocktailCreateView from '@/views/CocktailCreateView.vue'
