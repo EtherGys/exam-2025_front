@@ -20,7 +20,7 @@ onMounted(async () => {
     carte.value = data;
     cocktails.value = data.cocktails;
   } catch (e) {
-    error.value = 'Erreur lors du chargement de la carte.';
+    error.value = 'Connectez-vous pour voir le contenu de la carte';
   } finally {
     loading.value = false;
   }
@@ -33,7 +33,7 @@ function goToCocktail(id: number) {
 </script>
 
 <template>
-  <div class="w-full px-4 py-10">
+  <div class="w-full md:w-[80%] md:mx-auto  px-4 py-10">
     <header class="flex items-center justify-between px-4 py-3 border-b">
       <button @click="$router.back()" aria-label="Retour" class="text-gray-500 text-2xl cursor-pointer">←</button>
       <h1 class="text-lg font-semibold">Retour au menu</h1>

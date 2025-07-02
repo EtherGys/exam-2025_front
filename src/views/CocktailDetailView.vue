@@ -47,7 +47,7 @@ function addToCart() {
 
 <template>
   <div v-if="loading" class="text-gray-400">Chargement...</div>
-  <div v-else-if="cocktail" class="w-full px-6 py-8">
+  <div v-else-if="cocktail" class="w-full md:w-[80%] md:mx-auto px-6 py-8">
     <header class="flex items-center justify-between px-4 py-3 border-b">
       <button @click="$router.back()" aria-label="Retour" class="text-gray-500 text-2xl cursor-pointer">←</button>
       <h1 class="text-lg font-semibold">Retour à la carte</h1>
@@ -75,9 +75,14 @@ function addToCart() {
       L : {{ cocktail.prixL }} €
     </button>
   </div>
-  <div class="font-semibold mb-2">Quantité</div>
-  <input type="number" min="1" v-model.number="quantity" class="w-full border rounded-full px-4 py-2 mb-6" />
-  <button class="w-full bg-pink-200 text-gray-800 font-semibold py-3 rounded-full text-lg hover:bg-pink-300 transition" @click="addToCart">
+  <div >
+    <p class="font-semibold mb-2 ">
+
+      Quantité
+    </p>
+  <input type="number" min="1" v-model.number="quantity" class="w-full md:w-50 md:mx-auto md-mr-6 border rounded-full px-4 py-2 mb-6" />
+  </div>
+  <button class="w-full md:w-50 md:mx-auto bg-pink-200 text-gray-800 font-semibold py-3 rounded-full text-lg hover:bg-pink-300 transition" @click="addToCart">
     Ajouter au panier
   </button>
 </div>

@@ -42,3 +42,12 @@ export async function fetchCommandeByClient() {
   })
   return res.data
 }
+
+export async function updateLigneStatut(ligneId: number, statut: string) {
+  const res = await axios.put(
+    `${import.meta.env.VITE_API_URL}/commandes/lignes/${ligneId}/statut`,
+    { statut },
+    { headers: getAuthHeaders() }
+  );
+  return res.data;
+}

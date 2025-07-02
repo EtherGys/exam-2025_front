@@ -33,7 +33,7 @@ function goToCarte(carteId: number) {
 </script>
 
 <template>
-  <div class="min-h-screen bg-white flex flex-col">
+  <div class="md:w-[80%] md:mx-auto min-h-screen bg-white flex flex-col">
     
     <main class="flex-1 px-4 py-6">
       <h2 class="text-2xl font-bold mb-6">Choisir une carte</h2>
@@ -52,7 +52,7 @@ function goToCarte(carteId: number) {
           <div class="text-sm text-gray-500 leading-tight">{{ carte.description }}</div>
         </div>
         <img
-        :src="carte.imageUrl"
+        :src="carte.imageUrl == null || carte.imageUrl == ''? 'https://images.unsplash.com/photo-1570598912132-0ba1dc952b7d?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' : carte.imageUrl"
         alt="Image carte"
         class="w-24 h-24 object-cover rounded-lg border"
         />

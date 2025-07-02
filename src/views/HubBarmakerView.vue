@@ -29,13 +29,13 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-white flex flex-col">
+  <div class="md:w-[80%] md:m-auto min-h-screen bg-white flex flex-col">
     
     <main class="flex-1 px-4 py-6">
       <h2 class="text-2xl font-bold mb-6">Les actions possibles</h2>
-      <div  class="flex flex-col gap-6 mt-6">
+      <div  class="flex flex-col gap-6 mt-6 md:w-[80%] md:mx-auto">
         <div
-        class="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 cursor-pointer border bg-gray-100"
+        class="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 cursor-pointer border bg-gray-100 p-6"
         @click="router.push('/carte/barmaker')"
         >
         <div class="flex-1">
@@ -43,9 +43,9 @@ onMounted(async () => {
         </div>
       </div>
     </div>
-    <div  class="flex flex-col gap-6 mt-6">
+    <div  class="flex flex-col gap-6 mt-6 md:w-[80%] md:mx-auto">
       <div
-      class="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 cursor-pointer border bg-gray-100"
+      class="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 cursor-pointer border bg-gray-100 p-6"
       @click="router.push('/commandes/barmaker')"
       >
       <div class="flex-1">
@@ -55,9 +55,9 @@ onMounted(async () => {
       </div>
     </div>
   </div>
-  <div  class="flex flex-col gap-6 mt-6">
+  <div  class="flex flex-col gap-6 mt-6 md:w-[80%] md:mx-auto">
   <div
-  class="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 cursor-pointer border bg-gray-100"
+  class="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 cursor-pointer border bg-gray-100 p-6"
   @click=" router.push('/carte')"
   >
   <div class="flex-1">
@@ -65,9 +65,9 @@ onMounted(async () => {
   </div>
 </div>
 </div>
-  <div  class="flex flex-col gap-6 mt-6">
+  <div  class="flex flex-col gap-6 mt-6 md:w-[80%] md:mx-auto">
     <div
-    class="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 cursor-pointer border bg-gray-100"
+    class="flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 cursor-pointer border bg-gray-100 p-6"
     @click="router.push({ name: 'CocktailsCreate'})"
     >
     <div class="flex-1">
