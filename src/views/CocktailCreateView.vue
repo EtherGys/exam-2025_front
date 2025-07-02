@@ -2,24 +2,43 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { createCocktail } from '../api/cocktails'
+import { fetchCarteByBarmaker } from '../api/carte'
+import { useAuthStore } from '@/store/auth'
+import type { Carte } from '../../types/Carte'
+import  { CocktailCategorie } from '../../types/Cocktail'
 
 const router = useRouter()
+const auth = useAuthStore()
 
-const nom = ref('')
-const categorie = ref('')
-const description = ref('')
-const ingredients = ref([
-  { nom: '', quantite: '', unite: '' },
+const nom = ref<string>('')
+const image = ref<string>('')
+const prixS = ref<string>('')
+const prixM = ref<string>('')
+const prixL = ref<string>('')
+const categories = ref<string[]>([])
+const categorieOptions = Object.values(CocktailCategorie)
+const description = ref<string>('')
+const ingredients = ref<string[]>([
 ])
 const loading = ref(false)
 const error = ref('')
+const carteId = ref<number|null>(null)
+const cartes = ref<Carte[]>([])
 
 function addIngredient() {
-  ingredients.value.push({ nom: '', quantite: '', unite: '' })
+  ingredients.value.push('')
 }
 function removeIngredient(idx: number) {
   ingredients.value.splice(idx, 1)
 }
+
+async function loadCartes() {
+  if (auth.user) {
+    cartes.value = await fetchCarteByBarmaker()
+  }
+}
+
+loadCartes()
 
 async function save() {
   loading.value = true
@@ -28,10 +47,15 @@ async function save() {
     await createCocktail({
       nom: nom.value,
       description: description.value,
-      categorie: categorie.value,
+      categories: categories.value,
       ingredients: ingredients.value,
+      prixS: prixS.value,
+      prixM: prixM.value,
+      prixL: prixL.value,
+      image: image.value,
+      carteId: carteId.value
     })
-    router.push('/menu')
+    router.push('/hub')
   } catch (e: any) {
     error.value = e.message || 'Erreur lors de la création.'
   } finally {
@@ -41,74 +65,85 @@ async function save() {
 </script>
 
 <template>
-  <div class="flex h-[80vh] bg-[#fcfbfa] rounded-xl overflow-hidden shadow max-w-6xl mx-auto mt-8">
-    <!-- Sidebar -->
-    <aside class="w-72 border-r bg-white p-8 flex flex-col">
-      <h2 class="text-2xl font-bold mb-8">Menu</h2>
-      <nav class="flex flex-col gap-2">
-        <div class="flex gap-4 border-b pb-2 mb-4">
-          <span class="font-semibold border-b-2 border-[#e7cfc2] pb-1">Cocktails</span>
-          <span class="text-gray-400">Ingredients</span>
-          <span class="text-gray-400">Categories</span>
-        </div>
-        <div class="relative mb-4">
-          <input type="text" placeholder="Search" class="w-full rounded-full bg-[#f5f2ef] px-4 py-2 text-sm outline-none" />
-        </div>
-        <ul class="flex-1 overflow-y-auto">
-          <li v-for="c in ['Martini','Mojito','Whiskey Sour','Cosmopolitan','Pina Colada']" :key="c" class="flex items-center justify-between px-2 py-2 rounded hover:bg-[#f5f2ef] cursor-pointer">
-            <div>
-              <div class="font-medium">{{ c }}</div>
-              <div class="text-xs text-gray-400">Description du {{ c }}</div>
-            </div>
-            <span class="text-gray-400">&gt;</span>
-          </li>
-        </ul>
-      </nav>
-    </aside>
+  <div class="  bg-[#fcfbfa] rounded-xl overflow-hidden shadow max-w-6xl mx-auto mt-8">
+   <header class="flex items-center justify-between px-4 py-3 border-b">
+      <button @click="$router.back()" aria-label="Retour" class="text-gray-500 text-2xl cursor-pointer">←</button>
+      <h1 class="text-lg font-semibold">Retour</h1>
+      <div style="width: 2rem"></div>
+    </header>
     <!-- Main -->
     <main class="flex-1 p-10">
-      <h1 class="text-3xl font-bold mb-8">Martini</h1>
+         
+      <h1 class="text-3xl font-bold mb-8">Créer votre nouveau cocktail</h1>
       <form @submit.prevent="save" class="space-y-8">
+                  <div class="mb-6 border rounded p-6 border-gray-300">
+            <label class="block font-bold mb-1">Carte associée</label>
+            <select v-model="carteId" class="w-full border rounded px-3 py-2 bg-[#fcfbfa]">
+              <option :value="null" disabled>Choisissez une carte</option>
+              <option v-for="carte in cartes" :key="carte.id" :value="carte.id">{{ carte.nom }}</option>
+            </select>
+          </div>
         <div class="grid grid-cols-2 gap-8">
           <div>
-            <label class="block font-medium mb-1">Name</label>
+            <label class="block font-medium mb-1">Nom</label>
             <input v-model="nom" type="text" class="w-full border rounded px-3 py-2 bg-[#fcfbfa]" />
           </div>
-          <div>
-            <label class="block font-medium mb-1">Category</label>
-            <input v-model="categorie" type="text" class="w-full border rounded px-3 py-2 bg-[#fcfbfa]" />
-          </div>
-        </div>
-        <div>
+                  <div>
           <label class="block font-medium mb-1">Description</label>
           <textarea v-model="description" rows="3" class="w-full border rounded px-3 py-2 bg-[#fcfbfa]"></textarea>
         </div>
-        <div>
-          <label class="block font-bold mb-2">Ingredients</label>
-          <table class="w-full text-left border rounded overflow-hidden">
+     
+        </div>
+     <div>
+            <label class="block mb-1 font-bold">Catégories</label>
+            <div class="flex flex-wrap gap-2">
+              <label v-for="cat in categorieOptions" :key="cat" class="flex items-center gap-1">
+                <input type="checkbox" :value="cat" v-model="categories" />
+                {{ cat }}
+              </label>
+            </div>
+          </div>
+        <label class="block font-bold mb-2 mt-4">Les prix</label>
+       <div class="grid grid-cols-3 gap-8">
+          <div>
+            <label class="block font-medium mb-1">Prix S</label>
+            <input v-model="prixS" type="currency" class="w-full border rounded px-3 py-2 bg-[#fcfbfa]" />
+          </div>
+          <div>
+            <label class="block font-medium mb-1">Prix M</label>
+            <input v-model="prixM" type="currency" class="w-full border rounded px-3 py-2 bg-[#fcfbfa]" />
+          </div>
+          <div>
+            <label class="block font-medium mb-1">Prix L</label>
+            <input v-model="prixL" type="currency" class="w-full border rounded px-3 py-2 bg-[#fcfbfa]" />
+          </div>
+        </div>
+        <div class="mt-4">
+          <label class="block font-bold mb-2">Ingrédients</label>
+          <table class="w-full text-left  overflow-hidden">
             <thead>
               <tr class="bg-[#f5f2ef]">
-                <th class="py-2 px-3 font-semibold">Ingredient</th>
-                <th class="py-2 px-3 font-semibold">Quantity</th>
-                <th class="py-2 px-3 font-semibold">Unit</th>
-                <th></th>
+                <th class="py-2 px-3 font-semibold">Nom</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(ing, idx) in ingredients" :key="idx">
-                <td><input v-model="ing.nom" class="w-full bg-transparent border-b outline-none" /></td>
-                <td><input v-model="ing.quantite" class="w-16 bg-transparent border-b outline-none" /></td>
-                <td><input v-model="ing.unite" class="w-16 bg-transparent border-b outline-none" /></td>
+              <tr class="border rounded p-6" v-for="(ing, idx) in ingredients" :key="idx">
+                <td class="p-2"><input v-model="ingredients[idx]" placeholder="Renseignez votre ingrédient" class="w-full bg-transparent  outline-none" /></td>
                 <td>
-                  <button type="button" @click="removeIngredient(idx)" class="text-red-400 hover:underline text-xs">Remove</button>
+                  <button type="button" @click="removeIngredient(idx)" class="text-red-400 hover:underline text-xs">Retirer</button>
                 </td>
               </tr>
             </tbody>
           </table>
-          <button type="button" @click="addIngredient" class="mt-2 text-sm text-[#b48c6e] hover:underline">+ Add Ingredient</button>
+          <button type="button" @click="addIngredient" class="mt-2 text-sm text-[#b48c6e] hover:underline">+ Ajouter un ingrédient</button>
         </div>
-        <div class="flex justify-end">
-          <button type="submit" :disabled="loading" class="bg-[#e7cfc2] text-[#4b2e1e] px-6 py-2 rounded hover:bg-[#e0bfa3] transition">Save Changes</button>
+            <div>
+            <label class="block font-bold mt-4 mb-1">image</label>
+            <input v-model="image" type="text" class="w-full border rounded px-3 py-2 bg-[#fcfbfa]" />
+          </div>
+        <div class="flex justify-end mt-6">
+          <button type="submit" :disabled="loading" class="bg-[#e7cfc2] text-[#4b2e1e] px-6 py-2 rounded hover:bg-[#e0bfa3] transition">Créer</button>
         </div>
         <div v-if="error" class="text-red-500 mt-2">{{ error }}</div>
       </form>

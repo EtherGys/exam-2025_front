@@ -5,8 +5,8 @@ import type { User } from '../../types/User'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
-    user: null as User | null,
-    token: localStorage.getItem('token') || '',
+    user: localStorage.getItem('role') || null,
+    token: localStorage.getItem('token') || null,
     loading: false,
     error: '',
   }),
@@ -18,7 +18,10 @@ export const useAuthStore = defineStore('auth', {
         const res = await apiLogin(email, password)
         this.token = res.token
         localStorage.setItem('token', res.token)
-        this.user = res.user
+        this.user = res.client.role
+        console.log(res);
+        localStorage.setItem('role', res.client.role)
+        
       } catch (e: any) {
         this.error = e.response?.data?.message || 'Erreur de connexion'
       } finally {
@@ -32,7 +35,7 @@ export const useAuthStore = defineStore('auth', {
         const res = await apiRegister(nom, email, password)
         this.token = res.token
         localStorage.setItem('token', res.token)
-        this.user = res.user
+        this.user = res.client
       } catch (e: any) {
         this.error = e.response?.data?.message || 'Erreur d\'inscription'
       } finally {
@@ -40,9 +43,10 @@ export const useAuthStore = defineStore('auth', {
       }
     },
     logout() {
-      this.token = ''
+      this.token = null
       this.user = null
       localStorage.removeItem('token')
+      localStorage.removeItem('role')
     },
     async fetchMe() {
       if (!this.token) return

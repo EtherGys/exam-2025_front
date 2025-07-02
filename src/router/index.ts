@@ -1,7 +1,13 @@
+import BarmakerCartesView from '@/views/BarmakerCartesView.vue'
+import BarmakerCommandesView from '@/views/BarmakerCommandesView.vue'
+import CarteCreateView from '@/views/CarteCreateView.vue'
 import CarteView from '@/views/CarteView.vue'
+import CocktailCreateView from '@/views/CocktailCreateView.vue'
 import CocktailDetailView from '@/views/CocktailDetailView.vue'
+import HubBarmakerView from '@/views/HubBarmakerView.vue'
 import MenuView from '@/views/MenuView.vue'
 import OrderStatusView from '@/views/OrderStatusView.vue'
+import OrdersView from '@/views/OrdersView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -18,19 +24,44 @@ const router = createRouter({
       component: MenuView,
     },
     {
+      path: '/carte/barmaker',
+      name: 'CartesBarmaker',
+      component: BarmakerCartesView,
+    },
+    {
       path: '/cocktail/:id',
       name: 'Cocktails',
       component: CocktailDetailView,
     },
-    // {
-    //   path: '/commandes',
-    //   name: 'cocktails',
-    //   component: CocktailDetailView,
-    // },
     {
-      path: '/commandes:id',
-      name: 'cocktails',
+      path: '/cocktail',
+      name: 'CocktailsCreate',
+      component: CocktailCreateView,
+    },
+    {
+      path: '/commandes/:id',
+      name: 'OrderStatus',
       component: OrderStatusView,
+    },
+    {
+      path: '/commandes',
+      name: 'Commandes',
+      component: OrdersView,
+    },
+        {
+      path: '/commandes/barmaker',
+      name: 'CommandesBarmaker',
+      component: BarmakerCommandesView,
+    },
+    {
+      path: '/hub',
+      name: 'Hub',
+      component: HubBarmakerView,
+    },
+    {
+      path: '/carte',
+      name: 'CarteCreate',
+      component: CarteCreateView,
     },
     {
       path: '/login',

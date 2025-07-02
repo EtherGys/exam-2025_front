@@ -27,6 +27,7 @@ export interface LigneDeCommande {
 }
 
 export interface Commande {
+  id?: string
   dateHeureCommande?: string; // ISO string
   dateCreation?: string; // ISO string
   statutCommande?: StatutCommande;

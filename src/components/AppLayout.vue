@@ -13,6 +13,8 @@ function logout() {
   auth.logout()
   router.push('/login')
 }
+console.log(auth.user);
+
 </script> 
 
 <template>
@@ -23,33 +25,30 @@ function logout() {
       <div class="flex items-center min-w-[160px]">
         <router-link to="/" class="text-2xl font-bold text-gray-900 tracking-tight select-none">Bar'App</router-link>
       </div>
-      <!-- Menu central -->
-      <div class="flex-1 flex justify-center">
-        <div class="flex gap-8 text-base font-medium text-gray-700">
-          <router-link to="/orders" class="hover:text-black transition">Commandes</router-link>
-        </div>
-      </div>
+
       <!-- Icônes à droite -->
       <div class="flex items-center gap-6 min-w-[160px] justify-end">
-        <!-- Recherche -->
-        <button class="focus:outline-none">
-          <svg class="w-6 h-6 text-gray-500 hover:text-black transition" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        </button>
+         
         <!-- Panier -->
-        <router-link to="/cart" class="relative">
+        <router-link v-if="auth.user != null" to="/cart" class="relative">
           <svg class="w-6 h-6 text-gray-500 hover:text-black transition" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
           <span v-if="totalItems > 0" class="absolute -top-2 -right-2 bg-pink-300 text-white text-xs rounded-full px-2 py-0.5 shadow">{{ totalItems }}</span>
         </router-link>
         <!-- Avatar utilisateur ou login/register -->
         <div>
-          <router-link v-if="auth.user" to="/account" class="inline-block">
+          <!-- <router-link v-if="auth.user" to="/account" class="inline-block">
             <div class="w-9 h-9 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center overflow-hidden">
               <span class="text-gray-700 font-semibold text-lg">{{ auth.user.nom.charAt(0).toUpperCase() }}</span>
             </div>
-          </router-link>
-          <div v-else class="flex gap-2">
-            <router-link to="/login" class="text-sm text-gray-600 hover:text-black transition">Connexion</router-link>
-            <router-link to="/register" class="text-sm text-gray-600 hover:text-black transition">Inscription</router-link>
+          </router-link>-->
+          <div class="flex gap-2">
+            <router-link v-if="auth.user == null" to="/login" class="text-sm text-gray-600 hover:text-black transition">Connexion</router-link>
+            <router-link v-if="auth.user == null" to="/register" class="text-sm text-gray-600 hover:text-black transition">Inscription</router-link>
+            <router-link v-if="auth.user == 'USER'" to="/commandes" class="text-sm text-gray-600 hover:text-black transition">Mes commandes</router-link>
+            <router-link v-if="auth.user == 'BARMAKER'" to="/hub" class="text-sm text-gray-600 hover:text-black transition">Mon menu</router-link>
+            <button v-if="auth.user != null" @click="logout()" class="text-sm text-gray-600 hover:text-black transition">
+              Déconnexion
+            </button>
           </div>
         </div>
       </div>

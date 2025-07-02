@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { defineComponent, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { fetchAllCartes } from '../api/carte';
+import { fetchAllCartes, fetchCarteByBarmaker } from '../api/carte';
 import type { Carte } from '../../types/Carte';
+
 
 const router = useRouter();
 const cartes = ref<any[]>([]);
@@ -12,7 +13,7 @@ const error = ref('');
 onMounted(async () => {
   loading.value = true;
   try {
-    const data: Carte[] = await fetchAllCartes();
+    const data: Carte[] = await fetchCarteByBarmaker();
     cartes.value = data.map((carte, idx) => ({
       id: carte.id,
       titre: carte.nom,
@@ -29,14 +30,17 @@ onMounted(async () => {
 function goToCarte(carteId: number) {
   router.push({ name: 'Menu', params: { id: carteId } });
 }
-
 </script>
 
 <template>
   <div class="min-h-screen bg-white flex flex-col">
-    
+         <header class="flex items-center justify-between px-4 py-3 border-b">
+      <button @click="$router.back()" aria-label="Retour" class="text-gray-500 text-2xl cursor-pointer">←</button>
+      <h1 class="text-lg font-semibold">Retour</h1>
+      <div style="width: 2rem"></div>
+    </header>
     <main class="flex-1 px-4 py-6">
-      <h2 class="text-2xl font-bold mb-6">Choisir une carte</h2>
+      <h2 class="text-2xl font-bold mb-6">Vos cartes</h2>
       <div v-if="loading" class="text-gray-400">Chargement...</div>
       <div v-else-if="error" class="text-red-500">{{ error }}</div>
       <div v-else class="flex flex-col gap-6">

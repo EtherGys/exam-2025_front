@@ -33,7 +33,6 @@ onMounted(async () => {
 
 function addToCart() {
   if (!cocktail.value || !selectedSize.value) return
-  const tailleObj =  selectedSize.value
   cart.addItem({
     id: cocktail.value.id,
     nom: cocktail.value.nom,
@@ -41,8 +40,8 @@ function addToCart() {
     prix: selectedSize.value.prix,
     quantity: quantity.value,
   })
-   const $toast = useToast();
-$toast.success('Ajouté au panier !');
+  const $toast = useToast();
+  $toast.success('Ajouté au panier !');
 }
 </script> 
 
@@ -64,25 +63,25 @@ $toast.success('Ajouté au panier !');
         <div class="font-semibold mb-2">Taille</div>
         <div class="flex gap-3 mb-4">
           <button @click="selectedSize = {taille: Taille.S, prix: cocktail.prixS}"
-            :class="[selectedSize.prix === cocktail.prixS ? 'bg-gray-200 border border-gray-400' : 'bg-white border border-gray-200', 'px-5 py-2 rounded-full text-base font-medium transition']">
-            S : {{ cocktail.prixS }} €
-          </button>
-             <button @click="selectedSize = {taille: Taille.M, prix: cocktail.prixM}"
-            :class="[selectedSize.prix === cocktail.prixM ? 'bg-gray-200 border border-gray-400' : 'bg-white border border-gray-200', 'px-5 py-2 rounded-full text-base font-medium transition']">
-            M : {{ cocktail.prixM }} €
-          </button>
-              <button @click="selectedSize = {taille: Taille.L, prix: cocktail.prixL}"
-            :class="[selectedSize.prix === cocktail.prixL ? 'bg-gray-200 border border-gray-400' : 'bg-white border border-gray-200', 'px-5 py-2 rounded-full text-base font-medium transition']">
-            L : {{ cocktail.prixL }} €
-          </button>
-        </div>
-        <div class="font-semibold mb-2">Quantité</div>
-        <input type="number" min="1" v-model.number="quantity" class="w-full border rounded-full px-4 py-2 mb-6" />
-        <button class="w-full bg-pink-200 text-gray-800 font-semibold py-3 rounded-full text-lg hover:bg-pink-300 transition" @click="addToCart">
-          Ajouter au panier
+          :class="[selectedSize.prix === cocktail.prixS ? 'bg-gray-200 border border-gray-400' : 'bg-white border border-gray-200', 'px-5 py-2 rounded-full text-base font-medium transition']">
+          S : {{ cocktail.prixS }} €
         </button>
-      </div>
-    </div>
+        <button @click="selectedSize = {taille: Taille.M, prix: cocktail.prixM}"
+        :class="[selectedSize.prix === cocktail.prixM ? 'bg-gray-200 border border-gray-400' : 'bg-white border border-gray-200', 'px-5 py-2 rounded-full text-base font-medium transition']">
+        M : {{ cocktail.prixM }} €
+      </button>
+      <button @click="selectedSize = {taille: Taille.L, prix: cocktail.prixL}"
+      :class="[selectedSize.prix === cocktail.prixL ? 'bg-gray-200 border border-gray-400' : 'bg-white border border-gray-200', 'px-5 py-2 rounded-full text-base font-medium transition']">
+      L : {{ cocktail.prixL }} €
+    </button>
   </div>
-  <div v-else class="text-red-500">Cocktail introuvable.</div>
+  <div class="font-semibold mb-2">Quantité</div>
+  <input type="number" min="1" v-model.number="quantity" class="w-full border rounded-full px-4 py-2 mb-6" />
+  <button class="w-full bg-pink-200 text-gray-800 font-semibold py-3 rounded-full text-lg hover:bg-pink-300 transition" @click="addToCart">
+    Ajouter au panier
+  </button>
+</div>
+</div>
+</div>
+<div v-else class="text-red-500">Cocktail introuvable.</div>
 </template>

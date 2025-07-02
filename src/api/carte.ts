@@ -1,5 +1,6 @@
 import { useAuthStore } from "@/store/auth"
 import axios from "axios"
+import type { Carte } from "../../types/Carte"
 
 
 function getAuthHeaders() {
@@ -19,12 +20,16 @@ export async function fetchCarte(id: string) {
   return res.data
 }
 
-export async function fetchCarteByBarmaker(id: string) {
-  const res = await axios.get(`${import.meta.env.VITE_API_URL}/cartes/barmaker/${id}`)
+export async function fetchCarteByBarmaker() {
+  const res = await axios.get(`${import.meta.env.VITE_API_URL}/cartes/barmaker`, {
+    headers: getAuthHeaders(),
+  })
   return res.data
 }
 
-export async function createCarte(carte: any) {
-  const res = await axios.post(`${import.meta.env.VITE_API_URL}/cartes`, carte)
+export async function createCarte(carte: Carte) {
+  const res = await axios.post(`${import.meta.env.VITE_API_URL}/cartes`, carte, {
+    headers: getAuthHeaders(),
+  })
   return res.data
 }

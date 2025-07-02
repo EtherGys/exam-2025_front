@@ -29,15 +29,15 @@ export async function fetchCommande(id: string) {
   return res.data
 }
 
-export async function fetchCommandeByBarmaker(id: string) {
-  const res = await axios.get(`${import.meta.env.VITE_API_URL}/commandes/barmaker/${id}`, {
+export async function fetchCommandeByBarmaker() {
+  const res = await axios.get(`${import.meta.env.VITE_API_URL}/commandes/barmaker`, {
     headers: getAuthHeaders(),
   })
   return res.data
 }
 
-export async function fetchCommandeByClient(id: string) {
-  const res = await axios.get(`${import.meta.env.VITE_API_URL}/commandes/client/${id}`, {
+export async function fetchCommandeByClient() {
+  const res = await axios.get(`${import.meta.env.VITE_API_URL}/commandes/client`, {
     headers: getAuthHeaders(),
   })
   return res.data

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useAuthStore } from '../store/auth'
+import type { Cocktail } from '../../types/Cocktail'
 
 
 function getAuthHeaders() {
@@ -22,6 +23,8 @@ export async function fetchAllCocktails() {
 }
 
 export async function createCocktail(cocktail: any) {
+  console.log(cocktail);
+  
   const res = await axios.post(`${import.meta.env.VITE_API_URL}/cocktails`, cocktail, {
     headers: getAuthHeaders(),
   })

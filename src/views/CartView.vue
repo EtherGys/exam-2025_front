@@ -4,9 +4,11 @@ import { useCartStore } from '../store/cart'
 import { createCommande } from '../api/commandes'
 import type { Commande } from '../../types/Commande'
 import { useRouter } from 'vue-router'
+import { useToast } from 'vue-toast-notification'
 
 const cart = useCartStore()
 const router = useRouter()
+ const toast = useToast();
 
 function updateQuantity(item: any, quantity: number) {
   if (quantity < 1) return
@@ -33,10 +35,14 @@ async function checkout() {
   try {
     const res = await createCommande(payload)
     cart.resetCart()
-    // Supposons que res.id est l'identifiant de la commande créée
+
+    toast.success('Commande passée !'); 
+
     router.push({ name: 'OrderStatus', params: { id: res.id } })
   } catch (e) {
-    alert('Erreur lors de la commande')
+    // alert('Erreur lors de la commande')
+      
+toast.error('Une erreur s\'est produite lors de la commande, veuillez recommencer');
   }
 }
 </script> 

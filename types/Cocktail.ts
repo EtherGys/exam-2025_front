@@ -28,8 +28,8 @@ export interface Cocktail {
   description: string;
   image: string;
   ingredients: string[];
-  prixS: number;
-  prixM: number;
-  prixL: number;
+  prixS: string;
+  prixM: string;
+  prixL: string;
   categories: CocktailCategorie[];
 } 
