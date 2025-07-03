@@ -30,3 +30,17 @@ export async function createCocktail(cocktail: any) {
   })
   return res.data
 }
+
+export async function deleteCocktail(id: number) {
+  const res = await axios.delete(`${import.meta.env.VITE_API_URL}/cocktails/${id}`, {
+    headers: getAuthHeaders(),
+  })
+  return res.data
+}
+
+export async function updateCocktail(id: number, cocktail: any) {
+  const res = await axios.put(`${import.meta.env.VITE_API_URL}/cocktails/${id}`, cocktail, {
+    headers: getAuthHeaders(),
+  })
+  return res.data
+}
