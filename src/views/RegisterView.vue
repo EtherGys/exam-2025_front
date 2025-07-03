@@ -4,16 +4,16 @@
     import { useRouter } from 'vue-router'
     
     const nom = ref('')
+    const prenom = ref('')
+    const adresse = ref('')
     const email = ref('')
     const password = ref('')
     const auth = useAuthStore()
     const router = useRouter()
     
     async function onRegister() {
-      await auth.register(nom.value, email.value, password.value)
-      if (auth.token) {
-        router.push('/')
-      }
+      await auth.register(nom.value, prenom.value, email.value, password.value, adresse.value)
+      router.push('/')
     }
     
     watch(() => auth.token, (token) => {
@@ -28,6 +28,14 @@
         <div class="mb-4">
           <label class="block mb-1">Nom</label>
           <input v-model="nom" type="text" class="w-full border rounded px-3 py-2" required />
+        </div>
+        <div class="mb-4">
+          <label class="block mb-1">Prenom</label>
+          <input v-model="prenom" type="text" class="w-full border rounded px-3 py-2" required />
+        </div>
+        <div class="mb-4">
+          <label class="block mb-1">Adresse</label>
+          <input v-model="adresse" type="text" class="w-full border rounded px-3 py-2" required />
         </div>
         <div class="mb-4">
           <label class="block mb-1">Email</label>

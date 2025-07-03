@@ -28,11 +28,11 @@ export const useAuthStore = defineStore('auth', {
         this.loading = false
       }
     },
-    async register(nom: string, email: string, password: string) {
+    async register(nom: string, prenom: string, email: string, password: string, adresse: string) {
       this.loading = true
       this.error = ''
       try {
-        const res = await apiRegister(nom, email, password)
+        const res = await apiRegister(nom, prenom, email, password, adresse)
         this.token = res.token
         localStorage.setItem('token', res.token)
         this.user = res.client
